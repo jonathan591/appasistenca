@@ -18,7 +18,7 @@ class DepartamentResource extends Resource
     protected static ?string $model = Departament::class;
     protected static ?string $navigationLabel = 'Departamentos';
     protected static ?string $navigationIcon = 'heroicon-o-credit-card';
-
+ 
     public static function form(Form $form): Form
     {
         return $form

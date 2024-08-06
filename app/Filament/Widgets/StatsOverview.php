@@ -17,9 +17,9 @@ class StatsOverview extends BaseWidget
         $totalTimesheets = Timesheed::all()->count();
         return [
             //
-            Stat::make('Employees', $totalEmployees),
-            Stat::make('Pending Holidays', $totalHolidays),
-            Stat::make('Timesheets', $totalTimesheets),
+            Stat::make('Empleados', $totalEmployees)->color('success'),
+            Stat::make('Vaciones Pendientes', $totalHolidays),
+            Stat::make('Asistencias', $totalTimesheets),
 
         ];
     }

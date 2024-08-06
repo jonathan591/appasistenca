@@ -35,6 +35,10 @@ class PersonalPanelProvider extends PanelProvider
                 'primary' => Color::Blue,
               
             ])
+            ->brandName('Asistencia')
+            ->brandLogo(asset('logos.png'))
+            ->brandLogoHeight('70px')
+            ->favicon(asset('favicon.ico'))
             ->discoverResources(in: app_path('Filament/Personal/Resources'), for: 'App\\Filament\\Personal\\Resources')
             ->discoverPages(in: app_path('Filament/Personal/Pages'), for: 'App\\Filament\\Personal\\Pages')
             ->pages([

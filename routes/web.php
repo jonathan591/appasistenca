@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Pdfcontroller;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect("/personal");
 });
+
+Route::get('/pdf/generate/timesheed/{user}', [Pdfcontroller::class,'TimesheedRecords'])->name('pdf.asistencia');

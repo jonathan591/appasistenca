@@ -4,6 +4,7 @@ namespace App\Filament\Personal\Resources\TimesheedResource\Pages;
 
 use App\Filament\Personal\Resources\TimesheedResource;
 use App\Imports\MyTimesheetImport;
+use App\Models\Calendar;
 use App\Models\Timesheed;
 use Carbon\Carbon;
 use EightyNine\ExcelImport\ExcelImportAction;
@@ -28,8 +29,10 @@ class ListTimesheeds extends ListRecords
                 ->requiresConfirmation()
                 ->action(function (){
                     $user = Auth::user();
+                    $calendar = Calendar::where('active', 1)->pluck('id')->first();
+
                     $timesheet = new Timesheed();
-                    $timesheet->calendar_id = 1;
+                    $timesheet->calendar_id = $calendar;
                     $timesheet->user_id = $user->id;
                     $timesheet->day_in = Carbon::now();
                     $timesheet->type = 'work';
@@ -50,7 +53,8 @@ class ListTimesheeds extends ListRecords
                 ->action(function (){
                     $user = Auth::user();
                     $timesheet = new Timesheed();
-                    $timesheet->calendar_id = 1;
+                    $calendar = Calendar::where('active', 1)->pluck('id')->first();
+                    $timesheet->calendar_id = $calendar;
                     $timesheet->user_id = $user->id;
                     $timesheet->day_in = Carbon::now();
 
@@ -90,7 +94,8 @@ class ListTimesheeds extends ListRecords
                     $lastTimesheet->day_out = Carbon::now();
                     $lastTimesheet->save();
                     $timesheet = new Timesheed();
-                    $timesheet->calendar_id = 1;
+                    $calendar = Calendar::where('active', 1)->pluck('id')->first();
+                    $timesheet->calendar_id = $calendar;
                     $timesheet->user_id = Auth::user()->id;
                     $timesheet->day_in = Carbon::now();
                     $timesheet->type = 'pause';
@@ -112,7 +117,8 @@ class ListTimesheeds extends ListRecords
                     $lastTimesheet->day_out = Carbon::now();
                     $lastTimesheet->save();
                     $timesheet = new Timesheed();
-                    $timesheet->calendar_id = 1;
+                    $calendar = Calendar::where('active', 1)->pluck('id')->first();
+                    $timesheet->calendar_id = $calendar;
                     $timesheet->user_id = Auth::user()->id;
                     $timesheet->day_in = Carbon::now();
                     $timesheet->type = 'work';
@@ -125,14 +131,14 @@ class ListTimesheeds extends ListRecords
                 }),
             Actions\CreateAction::make(),
             ExcelImportAction::make()->color("primary")->use(MyTimesheetImport::class),
-            // Action::make('createPDF')
-            // ->label('Crear PDF')
-            // ->color('warning')
-            // ->requiresConfirmation()
-            // ->url(
-            //     fn (): string => route('pdf.example', ['user' => Auth::user()]),
-            //     shouldOpenInNewTab: true
-            // ),
+            Action::make('createPDF')
+            ->label('Crear PDF')
+            ->color('warning')
+            ->requiresConfirmation()
+            ->url(
+                fn (): string => route('pdf.asistencia', ['user' => Auth::user()]),
+                shouldOpenInNewTab: true
+            ),
         ];
 
 

@@ -19,7 +19,7 @@ class HolidyResource extends Resource
     protected static ?string $navigationLabel = 'Vacaciones';
 
     protected static ?string $navigationIcon = 'heroicon-c-calendar-date-range';
-
+ 
     public static function form(Form $form): Form
     {
         return $form

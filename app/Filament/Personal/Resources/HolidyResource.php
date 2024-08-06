@@ -5,6 +5,7 @@ namespace App\Filament\Personal\Resources;
 use App\Filament\Personal\Resources\HolidyResource\Pages;
 use App\Filament\Personal\Resources\HolidyResource\RelationManagers;
 use App\Models\Holidy;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -22,11 +23,11 @@ class HolidyResource extends Resource
     public static function getNavigationBadge(): ?string
     {
 
-        return parent::getEloquentQuery()->where('user_id', Auth::user()->id)->where('type','pending')->count();
+        return parent::getEloquentQuery()->where('user_id', Auth::user()->id)->where('type', 'pending')->count();
     }
     public static function getNavigationBadgeColor(): ?string
     {
-        return parent::getEloquentQuery()->where('user_id', Auth::user()->id)->where('type','pending')->count() > 0 ? 'warning' : 'info';
+        return parent::getEloquentQuery()->where('user_id', Auth::user()->id)->where('type', 'pending')->count() > 0 ? 'warning' : 'info';
     }
 
     public static function getEloquentQuery(): Builder
@@ -35,7 +36,7 @@ class HolidyResource extends Resource
     }
 
 
-   
+
 
     public static function form(Form $form): Form
     {
@@ -45,7 +46,14 @@ class HolidyResource extends Resource
                     ->relationship(name: 'calendar', titleAttribute: 'name')
                     ->required(),
 
-
+                // Forms\Components\Select::make('user_id')
+                // ->label('User')
+                // ->options(function () {
+                //     return User::whereHas('roles', function ($query) {
+                //         $query->whereIn('id', [1, 3]);
+                //     })->pluck('name', 'id');
+                // })
+                // ->required(),
                 Forms\Components\DatePicker::make('day')
                     ->required(),
             ]);
